@@ -20,15 +20,20 @@ public class ApartmentGui extends JFrame {
         jFrame.setLayout(null);
         jFrame.setBounds(SCREENSIZE.width/2-WIDTH/2,SCREENSIZE.height/2-HEIGHT/2,WIDTH,HEIGHT);
 
-        //添加登陆界面
-        AbstractPanel login=new LoginPanel(new JPanel(),jFrame);
-        JPanel loginPanel=login.initPanel();
-        jFrame.add(loginPanel);
-
         //添加主界面
         AbstractPanel main=new MainPanel(new JPanel(),jFrame);
         JPanel mainPanel=main.initPanel();
         jFrame.add(mainPanel);
+
+        //添加登陆界面
+        LoginPanel login=new LoginPanel(new JPanel(),jFrame);
+        JPanel loginPanel=login.initPanel();
+        login.getPanel(mainPanel);
+        jFrame.add(loginPanel);
+
+
+
+
 
 
         jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -2,8 +2,10 @@ import entity.Apartment;
 import org.testng.annotations.Test;
 import service.ApartmentService;
 import service.Impl.ApartmentServiceImpl;
+import util.TableContext;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 
 public class serviceTest {
@@ -40,6 +42,17 @@ public class serviceTest {
 
     }
 
+    @Test
+    public void testYear(){
+        System.out.println(Calendar.YEAR);
+    }
+
+    @Test
+    public void testTableContext() throws IllegalAccessException {
+        List<Apartment> apartments=apartmentService.queryAll();
+        Object[][] context =TableContext.getContext(apartments);
+        System.out.println(context);
+    }
 
 
 }

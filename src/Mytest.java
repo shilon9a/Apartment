@@ -22,6 +22,7 @@ public class Mytest {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+        testQueryOne();
     }
 
     public static void testQuery() throws SQLException {

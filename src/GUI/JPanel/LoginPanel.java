@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 public class LoginPanel extends AbstractPanel {
 
     private UserController userController=new UserController();
+    private JPanel mainPanel;
 
 
     private JLabel username;
@@ -34,7 +35,7 @@ public class LoginPanel extends AbstractPanel {
     @Override
     public JPanel initPanel() {
         panel.setLayout(null);
-        panel.setBounds(0,0,jFrame.getWidth(),jFrame.getHeight());
+        panel.setBounds(0,0,frame.getWidth(),frame.getHeight());
 
         //添加背景
         /*panel.setBackground(Color.cyan);*/
@@ -63,6 +64,7 @@ public class LoginPanel extends AbstractPanel {
         initLoginButton();
         panel.add(loginButton);
         //监听按钮
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,6 +72,7 @@ public class LoginPanel extends AbstractPanel {
                 String passWord= passwordField.getText();
                 if(userController.login(userName,passWord)){
                     panel.setVisible(false);
+                    mainPanel.setVisible(true);
                 }else{
                     msg.setVisible(true);
                 }
@@ -84,28 +87,32 @@ public class LoginPanel extends AbstractPanel {
 
     private void initUsernameJLabel(){
         username=new JLabel("用户名");
-        username.setBounds(jFrame.getWidth()/3-jLabelWidth/2,jFrame.getHeight()/4-jLabelHeight/2,jLabelWidth,jLabelHeight);
+        username.setBounds(frame.getWidth()/3-jLabelWidth/2,frame.getHeight()/4-jLabelHeight/2,jLabelWidth,jLabelHeight);
     }
     private void initPasswordJLabel(){
         password=new JLabel("密码");
-        password.setBounds(jFrame.getWidth()/3-jLabelWidth/2,jFrame.getHeight()/3-jLabelHeight/2,jLabelWidth,jLabelHeight);
+        password.setBounds(frame.getWidth()/3-jLabelWidth/2,frame.getHeight()/3-jLabelHeight/2,jLabelWidth,jLabelHeight);
     }
     private void initMsg(){
         msg=new JLabel("用户名或密码错误");
-        msg.setBounds(jFrame.getWidth()/2,jFrame.getHeight()/2,1000,20);
+        msg.setBounds(frame.getWidth()/2,frame.getHeight()/2,1000,20);
         msg.setVisible(false);
     }
     private void initUsernameText(){
         usernameText=new JTextField();
-        usernameText.setBounds(jFrame.getWidth()/2-jLabelWidth/2,jFrame.getHeight()/4-jLabelHeight/2,jTextFieldWidth,jTextFieldHeight);
+        usernameText.setBounds(frame.getWidth()/2-jLabelWidth/2,frame.getHeight()/4-jLabelHeight/2,jTextFieldWidth,jTextFieldHeight);
     }
     private void initPasswordField(){
         passwordField=new JPasswordField();
-        passwordField.setBounds(jFrame.getWidth()/2-jLabelWidth/2,jFrame.getHeight()/3-jLabelHeight/2,jTextFieldWidth,jTextFieldHeight);
+        passwordField.setBounds(frame.getWidth()/2-jLabelWidth/2,frame.getHeight()/3-jLabelHeight/2,jTextFieldWidth,jTextFieldHeight);
     }
     private void initLoginButton(){
         loginButton=new JButton("登陆");
-        loginButton.setBounds(jFrame.getWidth()/2,jFrame.getHeight()/2,buttonWidth,buttonHeight);
+        loginButton.setBounds(frame.getWidth()/2,frame.getHeight()/2,buttonWidth,buttonHeight);
+    }
+
+    public void getPanel(JPanel panel){
+        mainPanel=panel;
     }
 
 }
