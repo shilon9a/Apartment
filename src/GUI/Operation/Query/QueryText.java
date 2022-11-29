@@ -1,6 +1,8 @@
 package GUI.Operation.Query;
 
 import javax.swing.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class QueryText extends JTextField {
     private static JTextField textField;
@@ -16,7 +18,6 @@ public class QueryText extends JTextField {
     public JTextField initQueryText(){
         textField=new JTextField();
         textField.setBounds(panel.getWidth()/10,panel.getHeight()/10,textWidth,textHeight);
-
         textField.setVisible(true);
         return textField;
     }

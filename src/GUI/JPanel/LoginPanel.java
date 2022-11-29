@@ -3,8 +3,13 @@ package GUI.JPanel;
 
 import GUI.Operation.Add.AddButton;
 import GUI.Operation.Del.DelButton;
+import GUI.Operation.Query.MaxPrice;
+import GUI.Operation.Query.MinPrice;
 import GUI.Operation.Update.UpDateButton;
+import controller.ApartmentController;
 import controller.UserController;
+import util.InitTable;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +37,7 @@ public class LoginPanel extends AbstractPanel {
     private static final int buttonWidth=200;
     private static final int buttonHeight=50;
 
-
+    ApartmentController apartmentController=new ApartmentController();
 
     public LoginPanel(JPanel panel,JFrame jFrame) {
         super(panel,jFrame);
@@ -90,6 +95,14 @@ public class LoginPanel extends AbstractPanel {
                         //隐藏修改按钮
                         UpDateButton.getInstance().setVisible(true);
 
+                        JTextField maxPrice= MaxPrice.getInstance();
+                        maxPrice.setText("最高价格");
+                        JTextField minPrice= MinPrice.getInstance();
+                        minPrice.setText("最低价格");
+
+                        InitTable.Init(apartmentController.getAll());
+                    }else{
+                        msgLabel.setVisible(true);
                     }
                 } catch (Exception ex) {
                     msgLabel.setVisible(true);
@@ -104,13 +117,18 @@ public class LoginPanel extends AbstractPanel {
             public void actionPerformed(ActionEvent e) {
                 panel.setVisible(false);
                 mainPanel.setVisible(true);
-
+                InitTable.Init(apartmentController.getAll());
                 //隐藏添加按钮
                 AddButton.getInstance().setVisible(false);
                 //隐藏删除按钮隐
                 DelButton.getInstance().setVisible(false);
                 //隐藏修改按钮
                 UpDateButton.getInstance().setVisible(false);
+
+                JTextField maxPrice= MaxPrice.getInstance();
+                maxPrice.setText("最高价格");
+                JTextField minPrice= MinPrice.getInstance();
+                minPrice.setText("最低价格");
 
             }
         });

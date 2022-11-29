@@ -83,6 +83,13 @@ public class MainPanel extends AbstractPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel.setVisible(false);
+                JTextField queryText=QueryText.getInstance();
+                queryText.setText("");
+                JTextField maxPrice=MaxPrice.getInstance();
+                maxPrice.setText("");
+                JTextField minPrice=MinPrice.getInstance();
+                minPrice.setText("");
+
                 loginPanel.setVisible(true);
                 JPasswordField passwordField=LoginPanel.getInstance("passwordField");
                 JTextField usernameTextField=LoginPanel.getInstance("usernameTextField");
