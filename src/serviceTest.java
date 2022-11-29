@@ -1,9 +1,15 @@
+import GUI.JTable.ApartmentTable;
+import controller.ApartmentController;
+import dao.ApartmentDao;
+import dao.impl.ApartmentDaoImpl;
 import entity.Apartment;
 import org.testng.annotations.Test;
 import service.ApartmentService;
 import service.Impl.ApartmentServiceImpl;
 import util.TableContext;
 
+import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
@@ -33,7 +39,7 @@ public class serviceTest {
 
     @Test
     public void delService(){
-        apartmentService.removeById(new Apartment(5,null,null,null,null,null));
+        apartmentService.removeById(5);
         List<Apartment> apartments=apartmentService.queryAll();
         apartments.stream().forEach(item->{
             System.out.println(item);
@@ -52,6 +58,39 @@ public class serviceTest {
         List<Apartment> apartments=apartmentService.queryAll();
         Object[][] context =TableContext.getContext(apartments);
         System.out.println(context);
+    }
+
+    @Test
+    public void testInstance(){
+        JTable table1=ApartmentTable.getInstance(JTable.class);
+        JTable table2=ApartmentTable.getInstance(JTable.class);
+        if(table1==table2){
+            System.out.println(true);
+        }else {
+        System.out.println(false);
+        }
+    }
+
+    @Test
+    public void testLike(){
+        ApartmentDao apartmentDao=new ApartmentDaoImpl();
+        List<Apartment> apartments=apartmentDao.getApartmentByLocationLike(new Apartment(null,null,"京",null,null,null));
+
+        System.out.println(apartments);
+    }
+
+    @Test
+    public void testLikecon(){
+        ApartmentController apartmentController=new ApartmentController();
+        List<Apartment> apartments=apartmentController.queryByNameOrLocation("京");
+        apartments.stream().forEach(item->{
+            System.out.println(item);
+        });
+    }
+
+
+    @Test
+    public void aop(){
     }
 
 

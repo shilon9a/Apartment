@@ -1,6 +1,7 @@
 package dao.impl;
 
 
+import entity.Apartment;
 import util.JDBCUtil;
 import util.ORM;
 import util.SQL;
@@ -160,6 +161,71 @@ public abstract class BaseDao<T>{
         return list;
     }
 
+    public List<T> queryLike(T clazz){
+        List<T> list=new ArrayList<>();
 
+        try {
+            String sql=SQL.LikeSQL(clazz);
+            ResultSet resultSet=statement.executeQuery(sql);
+            while(resultSet.next()){
+                list.add(ORM.get(clazz,resultSet));
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
+
+    public List<T> Max(T clazz,Double max){
+        List<T> list=new ArrayList<>();
+        String sql="select * from Apartment where avgPrice <= "+max+";";
+        try {
+            ResultSet resultSet=statement.executeQuery(sql);
+            while(resultSet.next()){
+                list.add(ORM.get(clazz,resultSet));
+            }
+        } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
+
+    public List<T> Min(T clazz,Double min){
+        List<T> list=new ArrayList<>();
+        String sql="select * from Apartment where avgPrice >= "+min+";";
+        try {
+            ResultSet resultSet=statement.executeQuery(sql);
+            while(resultSet.next()){
+                list.add(ORM.get(clazz,resultSet));
+            }
+        } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
+
+    public List<T> Between(T clazz,Double min,Double max){
+        List<T> list=new ArrayList<>();
+        String sql="select * from Apartment where avgPrice between "+min+" and "+max;
+        try {
+            ResultSet resultSet=statement.executeQuery(sql);
+            while(resultSet.next()){
+                list.add(ORM.get(clazz,resultSet));
+            }
+        } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
 
 }

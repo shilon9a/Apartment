@@ -48,4 +48,39 @@ public interface ApartmentDao {
     public List<Apartment> getAllApartments();
 
 
+    /**
+     *
+     * @param apartment
+     * @return
+     */
+    public List<Apartment> getApartmentByNameLike(Apartment apartment);
+
+    /**
+     * 地址信息的模糊查询
+     * @param apartment
+     * @return
+     */
+    public List<Apartment> getApartmentByLocationLike(Apartment apartment);
+
+    /**
+     * 最大值查询
+     * @param max
+     * @return
+     */
+    public List<Apartment> queryMax(Double max);
+
+    /**
+     * 最小值查询
+     * @param min
+     * @return
+     */
+    public List<Apartment> queryMin(Double min);
+
+    /**
+     * 范围查询
+     * @param min
+     * @param max
+     * @return
+     */
+    public List<Apartment> queryBetween(Double min,Double max);
 }

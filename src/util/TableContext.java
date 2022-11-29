@@ -8,12 +8,12 @@ import java.util.List;
 
 public class TableContext {
     public static Object[][] getContext(List<Apartment> apartments) throws IllegalAccessException {
-        Object[][] context=new Object[apartments.size()][5];
+        Object[][] context=new Object[apartments.size()][6];
         for(int i=0;i< apartments.size();i++){
             Field[] fields=apartments.get(i).getClass().getDeclaredFields();
-            for(int j=0;j<5;j++){
-                fields[j+1].setAccessible(true);
-                context[i][j]=fields[j+1].get(apartments.get(i));
+            for(int j=0;j<6;j++){
+                fields[j].setAccessible(true);
+                context[i][j]=fields[j].get(apartments.get(i));
             }
         }
         return context;

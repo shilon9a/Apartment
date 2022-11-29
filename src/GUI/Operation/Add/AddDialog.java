@@ -10,10 +10,13 @@ public class AddDialog extends JDialog {
     public static JDialog initAddDialog(){
         addDialog=new AddDialog();
         addDialog.setSize(DialogWidth,DialogHeight);
+        addDialog.setModal(true);
         addDialog.setLayout(null);
 
         //添加panel
-        addDialog.add(AddPanel.initPanel(addDialog));
+        AddPanel panel=new AddPanel();
+        JPanel addPanel=panel.initPanel(addDialog);
+        addDialog.add(addPanel);
 
 
         addDialog.setResizable(false);

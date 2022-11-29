@@ -1,6 +1,9 @@
 package util;
 
+import entity.Apartment;
+
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class SQL {
     private static StringBuffer stringBuffer;
@@ -92,6 +95,26 @@ public class SQL {
         tableName=temp[temp.length-1];
 
         stringBuffer.append("delete from "+tableName+" where id="+id);
+        stringBuffer.append(";");
+        return stringBuffer.toString();
+    }
+
+    public static <T> String LikeSQL(T clazz) throws IllegalAccessException {
+        stringBuffer=new StringBuffer();
+        Field[] fields=clazz.getClass().getDeclaredFields();
+        String tableName=clazz.getClass().getName();
+        String[] temp=tableName.split("\\.");
+        tableName=temp[temp.length-1];
+        stringBuffer.append("select * from "+tableName+" where ");
+
+        for(int i=0;i< fields.length;i++){
+            fields[i].setAccessible(true);
+            if(fields[i].get(clazz)!=null){
+                stringBuffer.append(fields[i].getName()+" like '%"+fields[i].get(clazz)+"%'");
+                break;
+            }
+        }
+
         stringBuffer.append(";");
         return stringBuffer.toString();
     }

@@ -1,6 +1,9 @@
 package GUI.JPanel;
 
 
+import GUI.Operation.Add.AddButton;
+import GUI.Operation.Del.DelButton;
+import GUI.Operation.Update.UpDateButton;
 import controller.UserController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,22 +12,24 @@ import java.awt.event.ActionListener;
 public class LoginPanel extends AbstractPanel {
 
     private UserController userController=new UserController();
-    private JPanel mainPanel;
+    private static JPanel mainPanel;
 
 
-    private JLabel username;
-    private JLabel password;
-    private JLabel msg;
+    private static JLabel usernameLabel;
+    private static JLabel passwordLabel;
+    private static JLabel msgLabel;
     private static final int jLabelWidth=50;
     private static final int jLabelHeight=50;
 
-    private JTextField usernameText;
-    private JPasswordField passwordField;
+    private static JTextField usernameTextField;
+    private static JPasswordField passwordField;
     private static final int jTextFieldWidth=200;
     private static final int jTextFieldHeight=40;
 
-    private JButton loginButton;
-    private static final int buttonWidth=50;
+    private static JButton loginButton;
+
+    private static JButton visitorButton;
+    private static final int buttonWidth=200;
     private static final int buttonHeight=50;
 
 
@@ -42,19 +47,19 @@ public class LoginPanel extends AbstractPanel {
 
         //添加用户名Label
         initUsernameJLabel();
-        panel.add(username);
+        panel.add(usernameLabel);
 
         //添加密码Label
         initPasswordJLabel();
-        panel.add(password);
+        panel.add(passwordLabel);
 
         //添加msg
         initMsg();
-        panel.add(msg);
+        panel.add(msgLabel);
 
         //添加用户名Text
         initUsernameText();
-        panel.add(usernameText);
+        panel.add(usernameTextField);
 
         //添加密码Text
         initPasswordField();
@@ -63,22 +68,54 @@ public class LoginPanel extends AbstractPanel {
         //添加登陆按钮
         initLoginButton();
         panel.add(loginButton);
-        //监听按钮
 
+        //添加游客登陆按钮
+        initVisitorButton();
+        panel.add(visitorButton);
+
+        //监听按钮
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String userName=usernameText.getText();
+                String userName=usernameTextField.getText();
                 String passWord= passwordField.getText();
-                if(userController.login(userName,passWord)){
-                    panel.setVisible(false);
-                    mainPanel.setVisible(true);
-                }else{
-                    msg.setVisible(true);
+                try {
+                    if(userController.login(userName,passWord)){
+                        panel.setVisible(false);
+                        mainPanel.setVisible(true);
+                        //隐藏添加按钮
+                        AddButton.getInstance().setVisible(true);
+                        //隐藏删除按钮隐
+                        DelButton.getInstance().setVisible(true);
+                        //隐藏修改按钮
+                        UpDateButton.getInstance().setVisible(true);
+
+                    }
+                } catch (Exception ex) {
+                    msgLabel.setVisible(true);
                 }
+
 
             }
         });
+
+        visitorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.setVisible(false);
+                mainPanel.setVisible(true);
+
+                //隐藏添加按钮
+                AddButton.getInstance().setVisible(false);
+                //隐藏删除按钮隐
+                DelButton.getInstance().setVisible(false);
+                //隐藏修改按钮
+                UpDateButton.getInstance().setVisible(false);
+
+            }
+        });
+
+
 
 
         panel.setVisible(true);
@@ -86,33 +123,49 @@ public class LoginPanel extends AbstractPanel {
     }
 
     private void initUsernameJLabel(){
-        username=new JLabel("用户名");
-        username.setBounds(frame.getWidth()/3-jLabelWidth/2,frame.getHeight()/4-jLabelHeight/2,jLabelWidth,jLabelHeight);
+        usernameLabel=new JLabel("用户名");
+        usernameLabel.setBounds(frame.getWidth()/3-jLabelWidth/2,frame.getHeight()/4-jLabelHeight/2,jLabelWidth,jLabelHeight);
     }
     private void initPasswordJLabel(){
-        password=new JLabel("密码");
-        password.setBounds(frame.getWidth()/3-jLabelWidth/2,frame.getHeight()/3-jLabelHeight/2,jLabelWidth,jLabelHeight);
+        passwordLabel=new JLabel("密码");
+        passwordLabel.setBounds(frame.getWidth()/3-jLabelWidth/2,frame.getHeight()/3-jLabelHeight/2,jLabelWidth,jLabelHeight);
     }
     private void initMsg(){
-        msg=new JLabel("用户名或密码错误");
-        msg.setBounds(frame.getWidth()/2,frame.getHeight()/2,1000,20);
-        msg.setVisible(false);
+        msgLabel=new JLabel("用户名或密码错误");
+        msgLabel.setBounds(frame.getWidth()/2,frame.getHeight()/2,1000,20);
+        msgLabel.setVisible(false);
     }
     private void initUsernameText(){
-        usernameText=new JTextField();
-        usernameText.setBounds(frame.getWidth()/2-jLabelWidth/2,frame.getHeight()/4-jLabelHeight/2,jTextFieldWidth,jTextFieldHeight);
+        usernameTextField=new JTextField();
+        usernameTextField.setBounds(frame.getWidth()/2-jLabelWidth/2,frame.getHeight()/4-jLabelHeight/2,jTextFieldWidth,jTextFieldHeight);
     }
     private void initPasswordField(){
         passwordField=new JPasswordField();
         passwordField.setBounds(frame.getWidth()/2-jLabelWidth/2,frame.getHeight()/3-jLabelHeight/2,jTextFieldWidth,jTextFieldHeight);
     }
     private void initLoginButton(){
-        loginButton=new JButton("登陆");
-        loginButton.setBounds(frame.getWidth()/2,frame.getHeight()/2,buttonWidth,buttonHeight);
+        loginButton=new JButton("管理员登陆");
+        loginButton.setBounds(frame.getWidth()/3,frame.getHeight()/2,buttonWidth,buttonHeight);
+    }
+    private void initVisitorButton(){
+        visitorButton=new JButton("游客登陆");
+        visitorButton.setBounds(frame.getWidth()/3*2,frame.getHeight()/2,buttonWidth,buttonHeight);
     }
 
-    public void getPanel(JPanel panel){
+    public void getMainPanel(JPanel panel){
         mainPanel=panel;
+    }
+
+    public static <T> T getInstance(String str){
+        if(str.equals("usernameTextField")){
+            return (T)usernameTextField;
+        }
+        else if(str.equals("passwordField")){
+            return (T)passwordField;
+        }else if(str.equals("msgLabel")){
+            return (T)msgLabel;
+        }
+        return null;
     }
 
 }

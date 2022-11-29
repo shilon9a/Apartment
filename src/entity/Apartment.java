@@ -1,6 +1,7 @@
 package entity;
 
 import java.math.BigDecimal;
+import Exception.LengthException;
 
 public class Apartment {
     private Integer id;
@@ -75,7 +76,7 @@ public class Apartment {
         return avgPrice;
     }
 
-    public void setAvgPrice(BigDecimal avgPrice) {
+    public void setAvgPrice(BigDecimal avgPrice){
         this.avgPrice = avgPrice;
     }
 
@@ -91,5 +92,17 @@ public class Apartment {
                 '}';
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        Apartment apartment=(Apartment)obj;
+        if(id.equals(apartment.getId()) &&
+        apartmentName.equals(apartment.getApartmentName()) &&
+        location.equals(apartment.getLocation()) &&
+        roomNum.equals(apartment.getRoomNum()) &&
+        remainingRoom.equals(apartment.getRemainingRoom()) &&
+        avgPrice.equals(apartment.getAvgPrice())){
+            return true;
+        }
+        return false;
+    }
 }

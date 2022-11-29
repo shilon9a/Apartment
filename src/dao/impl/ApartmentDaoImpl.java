@@ -3,6 +3,9 @@ package dao.impl;
 import Exception.ApartmentException;
 import dao.ApartmentDao;
 import entity.Apartment;
+import util.SQL;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ApartmentDaoImpl extends BaseDao<Apartment> implements ApartmentDao {
@@ -49,5 +52,30 @@ public class ApartmentDaoImpl extends BaseDao<Apartment> implements ApartmentDao
     public List<Apartment> getAllApartments() {
         List<Apartment> apartments=queryAll(new Apartment());
         return apartments;
+    }
+
+    @Override
+    public List<Apartment> getApartmentByNameLike(Apartment apartment) {
+        return queryLike(apartment);
+    }
+
+    @Override
+    public List<Apartment> getApartmentByLocationLike(Apartment apartment) {
+        return queryLike(apartment);
+    }
+
+    @Override
+    public List<Apartment> queryMax(Double max) {
+        return Max(new Apartment(),max);
+    }
+
+    @Override
+    public List<Apartment> queryMin(Double min) {
+        return Min(new Apartment(),min);
+    }
+
+    @Override
+    public List<Apartment> queryBetween(Double min, Double max) {
+        return Between(new Apartment(),min,max);
     }
 }

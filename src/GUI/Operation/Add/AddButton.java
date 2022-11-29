@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AddButton extends JButton {
-    private JButton button;
+    private static JButton button;
     private JPanel panel;
     private Dialog addDialog;
 
@@ -16,7 +16,7 @@ public class AddButton extends JButton {
 
     public JButton initAddButton(){
         button=new JButton("添加");
-        button.setBounds(panel.getWidth()/10*9,panel.getHeight()/10*9,50,50);
+        button.setBounds(panel.getWidth()/10*9,panel.getHeight()/8,50,50);
         button.setVisible(true);
 
         button.addActionListener(new ActionListener() {
@@ -26,6 +26,10 @@ public class AddButton extends JButton {
             }
         });
 
+        return button;
+    }
+
+    public static JButton getInstance(){
         return button;
     }
 
