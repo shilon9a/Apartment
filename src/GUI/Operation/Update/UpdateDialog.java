@@ -11,18 +11,15 @@ public class UpdateDialog extends JDialog {
         updateDialog=new UpdateDialog();
         updateDialog.setSize(DialogWidth,DialogHeight);
         updateDialog.setModal(true);
-        updateDialog.setLayout(null);
 
         //添加panel
         UpdatePanel panel=new UpdatePanel();
         JPanel addPanel=panel.initPanel(updateDialog);
-        panel.initContext();
         updateDialog.add(addPanel);
 
 
         updateDialog.setResizable(false);
         updateDialog.setVisible(true);
-        updateDialog.setDefaultCloseOperation(updateDialog.EXIT_ON_CLOSE);
         return updateDialog;
     }
 

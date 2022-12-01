@@ -88,11 +88,11 @@ public class LoginPanel extends AbstractPanel {
                     if(userController.login(userName,passWord)){
                         panel.setVisible(false);
                         mainPanel.setVisible(true);
-                        //隐藏添加按钮
+                        //添加按钮
                         AddButton.getInstance().setVisible(true);
-                        //隐藏删除按钮隐
+                        //删除按钮隐
                         DelButton.getInstance().setVisible(true);
-                        //隐藏修改按钮
+                        //修改按钮
                         UpDateButton.getInstance().setVisible(true);
 
                         JTextField maxPrice= MaxPrice.getInstance();

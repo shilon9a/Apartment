@@ -41,71 +41,6 @@ public class UpdatePanel extends JPanel {
     private static final int JTextFieldWidth=180;
     private static final int JTextFieldHeight=50;
 
-    public JPanel initPanel(JDialog jDialog){
-        panel=new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(0,0,jDialog.getWidth(),jDialog.getHeight());
-
-        //添加apartment
-        initApartment(panel);
-        panel.add(apartmentTextField);
-        panel.add(apartmentLabel);
-
-        //添加location
-        initLocation(panel);
-        panel.add(locationTextField);
-        panel.add(locationLabel);
-
-        //添加房间数
-        initRoomNum(panel);
-        panel.add(roomNumTextField);
-        panel.add(roomNumLabel);
-
-        //添加剩余房间数
-        initRemainingRoom(panel);
-        panel.add(remainingRomTextField);
-        panel.add(remainingRoomLabel);
-
-        //添加平均价格
-        initAvgPrice(panel);
-        panel.add(avgPriceTextField);
-        panel.add(avgPriceLabel);
-
-        //添加添加按钮
-        initButton();
-        panel.add(myUpdate);
-
-        //监听添加事件
-        myUpdate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    int ans=JOptionPane.showConfirmDialog(panel, "修改");
-
-                    if(ans==JOptionPane.YES_OPTION){
-                        update();
-                        Query.queryNew();
-                        jDialog.dispose();
-                    } else if (ans==JOptionPane.NO_OPTION || ans==JOptionPane.CANCEL_OPTION) {
-                        jDialog.dispose();
-                    }
-                } catch (CompareException ex) {
-                    JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
-                }catch (LengthException ex){
-                    JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
-                }
-                catch (NumberFormatException ex){
-                    JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
-                }
-
-
-            }
-        });
-
-
-        return panel;
-    }
-
     public static void initApartment(JPanel panel){
         apartmentTextField=new JTextField();
         apartmentTextField.setBounds(panel.getWidth()/3,panel.getHeight()/6,JTextFieldWidth,JTextFieldHeight);
@@ -161,9 +96,82 @@ public class UpdatePanel extends JPanel {
         myUpdate.setBounds(panel.getWidth()/3,panel.getHeight()/12,40,40);
     }
 
-    public void initContext(){
+    public JPanel initPanel(JDialog jDialog){
+        panel=new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(0,0,jDialog.getWidth(),jDialog.getHeight());
+
+        //添加apartment
+        initApartment(panel);
+        panel.add(apartmentTextField);
+        panel.add(apartmentLabel);
+
+        //添加location
+        initLocation(panel);
+        panel.add(locationTextField);
+        panel.add(locationLabel);
+
+        //添加房间数
+        initRoomNum(panel);
+        panel.add(roomNumTextField);
+        panel.add(roomNumLabel);
+
+        //添加剩余房间数
+        initRemainingRoom(panel);
+        panel.add(remainingRomTextField);
+        panel.add(remainingRoomLabel);
+
+        //添加平均价格
+        initAvgPrice(panel);
+        panel.add(avgPriceTextField);
+        panel.add(avgPriceLabel);
+
+        //添加修改按钮
+        initButton();
+        panel.add(myUpdate);
+
+        //初始化内容
+        initField();
+
+
+        //监听修改事件
+        myUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int ans=JOptionPane.showConfirmDialog(panel, "修改");
+
+                    if(ans==JOptionPane.YES_OPTION){
+                        update();
+                        Query.queryNew();
+                        jDialog.dispose();
+                    } else if (ans==JOptionPane.NO_OPTION || ans==JOptionPane.CANCEL_OPTION) {
+                        jDialog.dispose();
+                    }
+                } catch (CompareException ex) {
+                    JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
+                }catch (LengthException ex){
+                    JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
+                }
+                catch (NumberFormatException ex){
+                    JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
+                }
+
+
+            }
+        });
+
+
+        return panel;
+    }
+
+
+
+    public void initField(){
         DefaultTableModel tableModel=ApartmentTable.getInstance(DefaultTableModel.class);
         JTable table=ApartmentTable.getInstance(JTable.class);
+        int num=table.getSelectedRow();
+
         Object date=tableModel.getDataVector().elementAt(table.getSelectedRow());
         Vector vector=(Vector) date;
         DateId=(Integer) vector.get(0);

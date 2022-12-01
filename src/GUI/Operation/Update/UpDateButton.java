@@ -3,6 +3,7 @@ package GUI.Operation.Update;
 import GUI.JTable.ApartmentTable;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

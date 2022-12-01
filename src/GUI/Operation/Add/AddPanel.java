@@ -101,8 +101,6 @@ public class AddPanel extends JPanel {
                 catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
                 }
-
-
             }
         });
 

@@ -26,12 +26,11 @@ public class MainPanel extends AbstractPanel{
     public JPanel initPanel() {
         panel.setLayout(null);
         panel.setBounds(0,0,frame.getWidth(),frame.getHeight());
-        panel.setBackground(Color.cyan);
 
         //添加表格
         ApartmentTable apartmentTable=new ApartmentTable(panel);
         JScrollPane scrollPane=ApartmentTable.getInstance(JScrollPane.class);
-        ApartmentTable.initTableModel();
+        apartmentTable.initTableModel();
         panel.add(scrollPane);
 
         //添加增加按钮

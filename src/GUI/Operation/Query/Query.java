@@ -5,6 +5,7 @@ import controller.ApartmentController;
 import entity.Apartment;
 import util.TableContext;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
@@ -15,6 +16,11 @@ public class Query {
     public static void queryNew(){
         DefaultTableModel tableModel=ApartmentTable.getInstance(DefaultTableModel.class);
         tableModel.getDataVector().removeAllElements();
+
+
+        JTable table=ApartmentTable.getInstance(JTable.class);
+        ListSelectionModel selectionModel = table.getSelectionModel();
+        selectionModel.clearSelection();
 
         List<Apartment> apartmentList=apartmentController.getAll();
         Object[][] context=null;
@@ -27,7 +33,7 @@ public class Query {
         for(int i=0;i<apartmentList.size();i++){
             tableModel.addRow(context[i]);
         }
-
-
     }
+
+
 }

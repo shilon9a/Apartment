@@ -62,7 +62,6 @@ public class DelButton extends JButton {
                     }
                 }
 
-
             }
         });
 

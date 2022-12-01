@@ -1,6 +1,5 @@
 package GUI.JTable;
 
-import controller.ApartmentController;
 import entity.Apartment;
 import service.ApartmentService;
 import service.Impl.ApartmentServiceImpl;
@@ -26,7 +25,7 @@ public class ApartmentTable extends JTable {
         init();
     }
 
-    public static void init(){
+    public void init(){
         tableModel=new DefaultTableModel();
         tableModel.setColumnCount(6);
         String[] titles={"id","公寓名","地理位置","共有房间数","剩余房间数","平均月租价格"};
@@ -50,7 +49,7 @@ public class ApartmentTable extends JTable {
         scrollPane.setVisible(true);
     }
 
-    public static void initTableModel(){
+    public void initTableModel(){
         ApartmentService apartmentService=new ApartmentServiceImpl();
         List<Apartment> apartments=apartmentService.queryAll();
 
@@ -63,6 +62,7 @@ public class ApartmentTable extends JTable {
         for(int i=0;i< apartments.size();i++){
             tableModel.addRow(context[i]);
         }
+        apartmentTable.setModel(tableModel);
     }
 
 
@@ -107,5 +107,6 @@ public class ApartmentTable extends JTable {
         }
         return null;
     }
+
 
 }
