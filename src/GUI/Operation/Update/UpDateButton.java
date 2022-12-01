@@ -28,12 +28,16 @@ public class UpDateButton extends JButton {
            @Override
            public void actionPerformed(ActionEvent e) {
                JTable table= ApartmentTable.getInstance(JTable.class);
+               int selectNum=table.getSelectedRow();
+
                if(table.getSelectedRow()==-1){
                    JOptionPane.showMessageDialog(panel,"请选择要修改的数据","提醒",JOptionPane.INFORMATION_MESSAGE);
                }
                else{
                    updateDialog=UpdateDialog.initUpdateDialog();
+                   table.setRowSelectionInterval(selectNum,selectNum);
                }
+
            }
        });
 
