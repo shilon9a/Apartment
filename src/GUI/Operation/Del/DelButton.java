@@ -54,7 +54,6 @@ public class DelButton extends JButton {
                             Integer id = (Integer)vector.elementAt(0);
 
                             apartmentController.removeById(id);
-
                             Query.queryNew();
                         }
                     }else if(option==JOptionPane.CANCEL_OPTION || option==JOptionPane.NO_OPTION){

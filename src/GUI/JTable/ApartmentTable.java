@@ -42,6 +42,7 @@ public class ApartmentTable extends JTable {
         apartmentTable.setShowGrid(true);
         apartmentTable.setBounds(jPanel.getWidth()/10,jPanel.getHeight()/4,jPanel.getWidth()/10*8, jPanel.getHeight()/5*3);
         apartmentTable.removeColumn(apartmentTable.getColumnModel().getColumn(0));
+        apartmentTable.getTableHeader().setReorderingAllowed(false);
         apartmentTable.setVisible(true);
 
         scrollPane=new JScrollPane(apartmentTable);

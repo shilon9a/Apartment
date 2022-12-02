@@ -16,11 +16,7 @@ public abstract class AbstractPanel extends JPanel{
         this.frame=jFrame;
     }
 
-    /*protected static JPanel getInstance(JPanel jPanel,JFrame jFrame){
-        panel=jPanel;
-        frame=jFrame;
-        return panel;
-    }*/
+
 
     public abstract JPanel initPanel();
 
