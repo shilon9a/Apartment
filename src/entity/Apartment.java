@@ -2,6 +2,9 @@ package entity;
 
 import java.math.BigDecimal;
 import Exception.LengthException;
+import Exception.NegativeException;
+import Exception.NullException;
+import Exception.CompareException;
 
 public class Apartment {
     private Integer id;
@@ -44,7 +47,10 @@ public class Apartment {
         return apartmentName;
     }
 
-    public void setApartmentName(String apartmentName) {
+    public void setApartmentName(String apartmentName) throws NullException{
+        if(apartmentName.trim().length()==0){
+            throw new NullException("公寓名称非空");
+        }
         this.apartmentName = apartmentName;
     }
 
@@ -52,7 +58,10 @@ public class Apartment {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(String location) throws NullException{
+        if(location.trim().length()==0){
+            throw new NullException("地理位置非空");
+        }
         this.location = location;
     }
 
@@ -60,7 +69,10 @@ public class Apartment {
         return roomNum;
     }
 
-    public void setRoomNum(Integer roomNum) {
+    public void setRoomNum(Integer roomNum)throws NegativeException {
+        if(roomNum<0){
+            throw new NegativeException("房间数应大于等于0");
+        }
         this.roomNum = roomNum;
     }
 
@@ -68,7 +80,13 @@ public class Apartment {
         return remainingRoom;
     }
 
-    public void setRemainingRoom(Integer remainingRoom) {
+    public void setRemainingRoom(Integer remainingRoom)throws NegativeException {
+        if(remainingRoom<0){
+            throw new NegativeException("剩余房间数应大于等于0");
+        }
+        if(remainingRoom>roomNum){
+            throw new CompareException("剩余房间数应小于总房间数");
+        }
         this.remainingRoom = remainingRoom;
     }
 
@@ -76,7 +94,15 @@ public class Apartment {
         return avgPrice;
     }
 
-    public void setAvgPrice(BigDecimal avgPrice){
+    public void setAvgPrice(BigDecimal avgPrice)throws NegativeException,LengthException{
+        int res=avgPrice.compareTo(BigDecimal.ZERO);
+        if(res==-1){
+            throw new NegativeException("价格应大于等于0");
+        }
+        String[] temp=avgPrice.toString().split("\\.");
+        if(temp[0].length()>10){
+            throw new LengthException("价格应低于10位数");
+        }
         this.avgPrice = avgPrice;
     }
 

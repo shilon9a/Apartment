@@ -93,5 +93,14 @@ public class serviceTest {
     public void aop(){
     }
 
+    @Test
+    public void testLen(){
+        String str="            ";
+        String temp=str.trim();
+        System.out.println(str==null);
+        System.out.println(str.equals("       "));
+        System.out.println(str.length());
+        System.out.println(temp.length());
+    }
 
 }

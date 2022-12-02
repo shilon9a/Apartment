@@ -1,5 +1,7 @@
 package entity;
 
+import Exception.NullException;
+
 public class User {
     private Integer id;
     private String username;
@@ -35,6 +37,9 @@ public class User {
     }
 
     public void setUsername(String username) {
+        if(username.trim().length()==0){
+            throw new NullException("用户名不为空");
+        }
         this.username = username;
     }
 
@@ -43,6 +48,9 @@ public class User {
     }
 
     public void setPassword(String password) {
+        if(password.trim().length()==0){
+            throw new NullException("密码不为空");
+        }
         this.password = password;
     }
 

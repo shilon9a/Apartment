@@ -9,7 +9,7 @@ import GUI.Operation.Update.UpDateButton;
 import controller.ApartmentController;
 import controller.UserController;
 import util.InitTable;
-
+import Exception.NullException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -102,12 +102,16 @@ public class LoginPanel extends AbstractPanel {
 
                         InitTable.Init(apartmentController.getAll());
                     }else{
+                        msgLabel.setText("用户名或密码错误");
                         msgLabel.setVisible(true);
                     }
-                } catch (Exception ex) {
+                } catch (NullException ex){
+                    msgLabel.setText(ex.getMessage());
+                    msgLabel.setVisible(true);
+                }catch (NullPointerException ex){
+                    msgLabel.setText("用户名或密码错误");
                     msgLabel.setVisible(true);
                 }
-
 
             }
         });
@@ -149,7 +153,7 @@ public class LoginPanel extends AbstractPanel {
         passwordLabel.setBounds(frame.getWidth()/3-jLabelWidth/2,frame.getHeight()/3-jLabelHeight/2,jLabelWidth,jLabelHeight);
     }
     private void initMsg(){
-        msgLabel=new JLabel("用户名或密码错误");
+        msgLabel=new JLabel();
         msgLabel.setBounds(frame.getWidth()/2,frame.getHeight()/2,1000,20);
         msgLabel.setVisible(false);
     }

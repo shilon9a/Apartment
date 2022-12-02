@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.Vector;
 import Exception.CompareException;
 import Exception.LengthException;
+import Exception.NegativeException;
 
 public class UpdatePanel extends JPanel {
 
@@ -42,7 +43,12 @@ public class UpdatePanel extends JPanel {
     private static final int JTextFieldHeight=50;
 
     public static void initApartment(JPanel panel){
-        apartmentTextField=new JTextField();
+        apartmentTextField=new JTextField(){
+            @Override
+            public boolean isEditable() {
+                return false;
+            }
+        };
         apartmentTextField.setBounds(panel.getWidth()/3,panel.getHeight()/6,JTextFieldWidth,JTextFieldHeight);
         apartmentTextField.setVisible(true);
 
@@ -53,7 +59,12 @@ public class UpdatePanel extends JPanel {
     }
 
     public static void initLocation(JPanel panel){
-        locationTextField=new JTextField();
+        locationTextField=new JTextField(){
+            @Override
+            public boolean isEditable() {
+                return false;
+            }
+        };
         locationTextField.setBounds(panel.getWidth()/3,panel.getHeight()/6*2,JTextFieldWidth,JTextFieldHeight);
         locationTextField.setVisible(true);
 
@@ -152,11 +163,11 @@ public class UpdatePanel extends JPanel {
                     JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
                 }catch (LengthException ex){
                     JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
-                }
-                catch (NumberFormatException ex){
+                } catch (NumberFormatException ex){
                     JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
+                }catch (NegativeException ex){
+                    JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
                 }
-
 
             }
         });
@@ -184,16 +195,13 @@ public class UpdatePanel extends JPanel {
         avgPriceTextField.setText(apartment.getAvgPrice().toString());
     }
 
-    public void update()throws NumberFormatException,LengthException,CompareException{
-        apartment=new Apartment(DateId,
-                apartmentTextField.getText(),
-                locationTextField.getText(),
-                Integer.valueOf(roomNumTextField.getText().toString()),
-                Integer.valueOf(remainingRomTextField.getText().toString()),
-                new BigDecimal(avgPriceTextField.getText().toString()));
-
-        ExceptionUtil.comparePriceLen(new BigDecimal(avgPriceTextField.getText().toString()));
-        ExceptionUtil.compareRoomNum(apartment.getRemainingRoom(),apartment.getRoomNum());
+    public void update()throws NumberFormatException,LengthException,CompareException,NegativeException {
+        apartment=new Apartment();
+        apartment.setId(DateId);
+        apartment.setApartmentName(apartmentTextField.getText());
+        apartment.setRoomNum(Integer.valueOf(roomNumTextField.getText()));
+        apartment.setRemainingRoom(Integer.valueOf(remainingRomTextField.getText()));
+        apartment.setAvgPrice(new BigDecimal(avgPriceTextField.getText()));
 
         apartmentController.update(apartment);
     }

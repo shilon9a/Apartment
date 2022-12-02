@@ -21,7 +21,6 @@ public class AddDialog extends JDialog {
 
         addDialog.setResizable(false);
         addDialog.setVisible(true);
-        /*addDialog.setDefaultCloseOperation(addDialog.EXIT_ON_CLOSE);*/
         return addDialog;
     }
 

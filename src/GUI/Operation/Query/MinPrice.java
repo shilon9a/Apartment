@@ -3,7 +3,7 @@ package GUI.Operation.Query;
 import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.math.BigDecimal;
+import Exception.NegativeException;
 
 public class MinPrice {
     private static JTextField min;
@@ -29,9 +29,14 @@ public class MinPrice {
                     min.setText("最低价格");
                 }else {
                     try {
-                        BigDecimal.valueOf(Double.valueOf(min.getText()));
+                        Double.valueOf(min.getText());
+                        if(Double.valueOf(min.getText())<0){
+                            throw new NegativeException("价格应大于0");
+                        }
                     } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
+                    }catch (NegativeException ex){
+                        JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }

@@ -1,16 +1,11 @@
 package GUI.Operation.Add;
 
 import GUI.JTable.ApartmentTable;
-import com.mysql.cj.xdevapi.Table;
-import com.sun.org.apache.xpath.internal.res.XPATHErrorResources_de;
 import controller.ApartmentController;
 import entity.Apartment;
-import util.ExceptionUtil;
 import util.TableContext;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -18,6 +13,8 @@ import java.util.List;
 import Exception.ApartmentException;
 import Exception.CompareException;
 import Exception.LengthException;
+import Exception.NegativeException;
+import Exception.NullException;
 
 public class AddPanel extends JPanel {
 
@@ -92,15 +89,18 @@ public class AddPanel extends JPanel {
                     } else if (ans==JOptionPane.NO_OPTION || ans==JOptionPane.CANCEL_OPTION) {
                         jDialog.dispose();
                     }
+                }catch (NullException ex){
+                    JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
+                } catch (NegativeException ex){
+                    JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
                 } catch (CompareException ex) {
                     JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
-
-                }catch (LengthException ex){
+                } catch (LengthException ex){
                     JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
                 }
-                catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
-                }
+
             }
         });
 
@@ -163,15 +163,15 @@ public class AddPanel extends JPanel {
         myAdd.setBounds(panel.getWidth()/3,panel.getHeight()/12,40,40);
     }
 
-    public  void add() throws NumberFormatException,LengthException,CompareException{
-        apartment=new Apartment(null,
-                apartmentTextField.getText(),
-                locationTextField.getText(),
-                Integer.valueOf(roomNumTextField.getText().toString()),
-                Integer.valueOf(remainingRomTextField.getText().toString()),
-                new BigDecimal(avgPriceTextField.getText().toString()));
-        ExceptionUtil.comparePriceLen(new BigDecimal(avgPriceTextField.getText().toString()));
-        ExceptionUtil.compareRoomNum(Integer.valueOf(remainingRomTextField.getText().toString()),Integer.valueOf(roomNumTextField.getText().toString()));
+    public  void add() throws NumberFormatException,LengthException,CompareException, NegativeException, NullException {
+        apartment=new Apartment();
+        apartment.setId(null);
+        apartment.setApartmentName(apartmentTextField.getText());
+        apartment.setLocation(locationTextField.getText());
+        apartment.setRoomNum(Integer.valueOf(roomNumTextField.getText()));
+        apartment.setRemainingRoom(Integer.valueOf(remainingRomTextField.getText()));
+        apartment.setAvgPrice(new BigDecimal(avgPriceTextField.getText()));
+
         if(!apartmentController.save(apartment)){
             throw new ApartmentException("保存失败");
         }

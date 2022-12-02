@@ -3,7 +3,7 @@ package GUI.Operation.Query;
 import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.math.BigDecimal;
+import Exception.NegativeException;
 
 public class MaxPrice {
     private static JTextField max;
@@ -30,9 +30,14 @@ public class MaxPrice {
                     max.setText("最高价格");
                 }else{
                     try{
-                        BigDecimal.valueOf(Double.valueOf(max.getText()));
+                        Double.valueOf(max.getText());
+                        if(Double.valueOf(max.getText())<0){
+                            throw new NegativeException("价格应大于0");
+                        }
                     }catch(NumberFormatException exception){
                         JOptionPane.showMessageDialog(panel,"请输入正确的数字","提醒",JOptionPane.INFORMATION_MESSAGE);
+                    }catch (NegativeException ex){
+                        JOptionPane.showMessageDialog(panel,ex.getMessage(),"提醒",JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
