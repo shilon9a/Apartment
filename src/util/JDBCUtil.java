@@ -8,10 +8,10 @@ import java.sql.Statement;
 public class JDBCUtil {
     private static ThreadLocal<Connection> connectionThreadLocal=new ThreadLocal<>();
 
-    private static final String Driver="com.mysql.cj.jdbc.Driver";
-    private static final String url="jdbc:mysql://localhost:3306/javaHomework?serverTimezone=UTC";
-    private static final String username="root";
-    private static final String password="";
+    private static final String Driver="...";
+    private static final String url="...";
+    private static final String username="...";
+    private static final String password="...";
 
     static {
         try {
